@@ -20,6 +20,7 @@
  * 1.If nums[2, 2, 7, 11, 15], target = 4, return [0, 1]. Because both nums[0] and nums[1] are equal to 2. Does this res have the same element twice?
  * 2.If the given array is sorted. Does it have a more efficency solution?
  * 3.If the given array has duplicated elements, how can you store the all solutions?
+ * 4.If it has a solution [idx1, idx2], how can you guarantee the idx1 less than idx2?
  *
  */
 class Solution {
@@ -28,7 +29,7 @@ class Solution {
          * Brute Force Solution
          *
          * Time complexity: O(n^2)
-         * Sapce complexity: O(1)
+         * Space complexity: O(1)
          */
         vector<int> twoSum1_ans1(vector<int>& nums, int target) {
             if (nums.size() <= 1)
@@ -46,7 +47,7 @@ class Solution {
          * Two-pass Hash Table solution
          *
          * Time complexity: O(n)
-         * Sapce complexity: O(n)
+         * Space complexity: O(n)
          */
         vector<int> twoSum_ans2(vector<int>& nums, int target) {
             unorderde_map<int, int> mapping;
@@ -69,7 +70,7 @@ class Solution {
          * One-pass Hash Table solution
          *
          * Time complexity: O(n)
-         * Sapce complexity: O(n)
+         * Space complexity: O(n)
          */
         vector<int> towSum_ans3(vector<int>& nums, int target) {
             unorderde_map<int, int> mapping;
