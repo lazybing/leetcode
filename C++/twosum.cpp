@@ -1,5 +1,6 @@
 // author: lazybing
-// email:libinglimit@gmail.com
+// email: libinglimit@gmail.com
+// github: https://github.com/lazybing
 
 /*
  * Given an array of integers, return indices of tow numbers such that they add up to a specific target.
@@ -14,6 +15,12 @@
  * 2.only has one element (nums = [9], target = 9) return vector<int>{}
  * 3.no nums[i] + nums[j] == target (nums = [2, 7, 11, 15], target = 100) return vector<int>{}
  * 4.only the same element twice equals to target 2 * nums[i] == target (nums = [2, 7, 11, 15], taregt = 4) return vector<int>{}
+ *
+ * Think more: 
+ * 1.If nums[2, 2, 7, 11, 15], target = 4, return [0, 1]. Because both nums[0] and nums[1] are equal to 2. Does this res have the same element twice?
+ * 2.If the given array is sorted. Does it have a more efficency solution?
+ * 3.If the given array has duplicated elements, how can you store the all solutions?
+ *
  */
 class Solution {
     public:
