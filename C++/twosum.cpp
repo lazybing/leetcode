@@ -50,7 +50,7 @@ class Solution {
          * Space complexity: O(n)
          */
         vector<int> twoSum_ans2(vector<int>& nums, int target) {
-            unorderde_map<int, int> mapping;
+            unordered_map<int, int> mapping;
 
             for (int i = 0; i < nums.size(); i++) {
                 mapping.insert({nums[i], i});
@@ -72,13 +72,14 @@ class Solution {
          * Time complexity: O(n)
          * Space complexity: O(n)
          */
-        vector<int> towSum_ans3(vector<int>& nums, int target) {
-            unorderde_map<int, int> mapping;
+        vector<int> twoSum_ans3(vector<int>& nums, int target) {
+            unordered_map<int, int> mapping;
             for (int i = 0; i < nums.size(); i++) {
-                mapping[nums[i]] = i;
+                //mapping[nums[i]] = i;
+                mapping.insert({nums[i], i});
                 auto j = mapping.find(target - nums[i]);
                 if (j != mapping.end() && j->second != i)
-                    return vector<int> {i, j->second};
+                    return vector<int>{i, j->second};
             }
 
             return vector<int>{};
