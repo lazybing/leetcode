@@ -135,8 +135,8 @@ class Solution4 {
                     left = max(left, mapping[s[right]] + 1);
                 }
                 mapping[s[right]] = right;
-                right++;
                 res = max(res, right - left + 1);
+                right++;
             }
 
             return res;
