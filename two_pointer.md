@@ -112,6 +112,10 @@ public:
 > 
 > Note: You may not slant the container and n is at least 2.
 
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/container_with_most_water.png)
+
+The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+
 最大储水能力。
 
 方法一：暴力法。遍历所有可能储水情况，找到其中的最大值即可。但该方法会计算超时。
@@ -139,6 +143,8 @@ public:
 
 方法二：双指针法。储水面积 = 两根柱子的距离 x 两根柱子中较短柱子的长度；即 `area = w * h`。固定 h，w 越大面积越大，固定 w，h 越大面积越大。因此可以选取起始和结束两个位置作为最大 w，h选择其中较小者，计算面积，然后逐步h较小者的指针，最后求得最大面积。
 
+选取数组的起始和末尾元素作为首尾双指针的起始位置，计算两个指针可容纳的储水面积，之后移动数值较小的指针向中间靠拢，重新计算两个指针可容纳的储水面积并与之前的最大面积做比较，以此类推，直至两个指针相遇位置，即可得最大面积。
+
 ```
 class Solution {
 public:
@@ -165,14 +171,7 @@ public:
 * 时间复杂度：O(n)。遍历一次 vector 中的所有元素。
 * 空间复杂度：O(1)。使用恒定空间。
 
-### 双指针与滑动窗口
+总结
+===
 
-> LeetCode567 Permutation in String
->
-> Given two strings s1 and s2, write a function to return true if s2 contains the permutation of s1. In other words, one of the first string's permutations is the substring of the second string.
-
- 方法一：暴力法。最直观的方法是检测字符串 s1 的所有排列，是否存在某个排列是 s2 的子字符串。
-
-1. http://ningziwen.com/2018/08/16/two-pointer-technique/
-2. https://blogarithms.github.io/articles/2019-04/two-pointer-algo
-3. https://dorianhe.github.io/Summary-Two-pointer-Method-in-Leetcode-Problems/
+对于可以使用双指针的问题，多多考虑使用的指针类型，是从一边开始的快慢指针，还是从两边开始的首尾指针。针对快慢指针，用于 sliding window 问题时，还可以考虑通过指针控制窗口的大小来优化算法。后续会再提到。
