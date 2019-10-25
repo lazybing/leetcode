@@ -17,13 +17,13 @@ LeetCode 中有许多与字符串、数组、链表以及滑动窗口相关的�
 >To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
 
 查看链表是否有环。
-![](cycle.png)
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/cycle.png)
 
 ---
 
 方法一：哈希法。遍历整个链表，查看是否存在某个节点遍历过两次，如果存在这样的节点，就证明有环存在，否则，没有环。因为要查看节点出现的次数，所以很容易想到使用 Hash Table 存储之前遍历过的节点。
 
-![](hash_table.png)
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/hash_table.png)
 
 如上图所示，首先创建一个空的哈希表，依次往哈希表中插入链表的节点 3-->2-->0-->4,如果链表有环，接下来再继续查看哈希表中是否有下一个节点 `2`,如果有此节点，则证明有环；否则，无环。
 ```
@@ -59,7 +59,7 @@ public:
 
 方法二：双指针法。类似于两个不同速度的人跑步，如果是围着操场跑圈，快的总能多跑一圈后追上慢的；如果是直线跑，除了起点外，两人就永远不会在相遇了。同样的道理，从链表的起始点开始给到两个快速、慢速指针，如果有环，快速指针总能追上慢速指针，如果没有环，快速指针提前到链表尾部，结束。
 
-![](two_pointer.png)
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/two_pointer.png)
 
 如上图所示，将快慢指针同时初始化为第一个节点，如图1所示。快指针每次移动步长为2，慢指针每次移动步长为1.慢指针到达节点2时，进入环内，此时快指针指向节点0.如图2所示。继续一定，快指针第二次指向2节点，慢指针指向0节点，如图3所示。最后，快指针慢指针在节点4处再次相遇，证明有环，如图4所示。如果无环，快指针会提前到达链表终点。
 
