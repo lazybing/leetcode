@@ -203,6 +203,8 @@ Test Case:
 
 方法一：暴力法。遍历所有子字符串，针对每个字符串，查看是否含有重复字符。时间超时。
 
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_0.png)
+
 ```cpp
 class Solution1 {
     private:
@@ -241,7 +243,7 @@ class Solution1 {
 方法二：双指针法。该方法是对上面暴力法的优化。主要有两点优化。
 
 1. 针对子字符串是否含有重复字符的优化。替代上面的 allUnique 函数，使用了unordered_set 容器，来对子字符串进行了处理，使得时间复杂度降低到了O(n^2)。
-2. 针对子字符串选择的优化。固定 left 的情况，只要找到 [left, right) 存在与 right 指针重复的字符，就跳出子循环，因为此时[left, right + i]一定含有重复字符。继续查看 left + 1 为起始的子字符串情况。如下图所示，当right 指向第二个 c 时，right 继续增加，子字符串一定包含重复字符 c。因此可以跳出子循环。
+2. 针对子字符串选择的优化。固定 left 的情况，只要找到 [left, right) 存在与 right 指针重复的字符，就跳出子循环，因为此时[left, right + i]一定含有重复字符。继续查看 left + 1 为起始的子字符串情况。如下图所示，当right 指向第二个 c 时，right 继续增加，子字符串一定包含重复字符 c。因此可以跳出子循环。该优化方案相对于方法一，少了步骤 4/5 两步。
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_1.png)
 
@@ -318,8 +320,10 @@ class Solution3 {
 
 方法四：滑动窗口法。该方法是对方法三进一步优化。
 
-1. 首先，上面最left的移动是逐个移动，最后移动到 i + 1 位置的，本方法使用 unordered_map ，一次移动到 i + 1 的位置。
+1. 首先，上面最left的移动是逐个移动，最后移动到 i + 1 位置的，本方法使用 unordered_map ，一次移动到 i + 1 的位置。该优化，相对于方法三，省去了步骤 4/5 两步。
 2. 其次，对退出条件作了进一步的优化，使用 right < s.size 的同时，添加了 left + res < s.size() 的限制，从而避免了一些无效子字符串的检查。
+
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_2.png)
 
 ```cpp
 //using sliding window && two_pointer && unordered_map
