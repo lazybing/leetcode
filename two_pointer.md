@@ -239,8 +239,8 @@ class Solution1 {
 
 方法二：双指针法。该方法是对上面暴力法的优化。主要有两点优化。
 
-1. 替代上面的 allUnique 函数，使用了unordered_set 容器，来对子字符串进行了处理，使得时间复杂度降低到了O(n^2)。
-2. 针对固定 left 的情况，只要找到 [left, right) 存在与 right 指针重复的字符，就跳出子循环，因为此时[left, right + i]一定含有重复字符。继续查看 left + 1 为起始的子字符串情况。
+1. 针对子字符串是否含有重复字符的优化。替代上面的 allUnique 函数，使用了unordered_set 容器，来对子字符串进行了处理，使得时间复杂度降低到了O(n^2)。
+2. 针对子字符串选择的优化。固定 left 的情况，只要找到 [left, right) 存在与 right 指针重复的字符，就跳出子循环，因为此时[left, right + i]一定含有重复字符。继续查看 left + 1 为起始的子字符串情况。如下图所示，当right 指向第二个 c 时，right 继续增加，子字符串一定包含重复字符 c。因此可以跳出子循环。
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_1.png)
 
