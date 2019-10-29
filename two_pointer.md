@@ -1,7 +1,7 @@
 前言
 ===
 
-LeetCode 中有许多与字符串、数组、链表以及滑动窗口相关的题目，都用到了一种称为双指针`two pointer`的方法，顾名思义，双指针是指有两个游标指针指向不同的位置，注意此处的指针与C/C++语言中的指针并不完全相同，可以理解为指向不同位置的两个游标。
+LeetCode 中有许多与字符串、数组、链表相关的题目，都用到了一种称为双指针`two pointer`的方法，顾名思义，双指针是指有两个游标指针指向不同的位置，注意此处的指针与C/C++语言中的指针并不完全相同，可以理解为指向不同位置的两个游标。
 
 双指针有两种类型，一种是起始位置位于首尾、移动步长相同的“首尾双指针”，一种是起始位置相同、移动步长不同的“快慢双指针”。双指针是针对特定问题而提出的一种算法思想。
 
@@ -184,7 +184,7 @@ public:
 * 时间复杂度：O(n)。遍历一次 vector 中的所有元素。
 * 空间复杂度：O(1)。使用恒定空间。
 
-### 双指针与滑动窗口
+### 双指针与字符串
 
 > LeetCode3 Longest Substring Without Repeating Characters
 >
@@ -198,9 +198,9 @@ Test Case:
  | "bbbbb"    | 1 | substr:"b", len is 1  |
  | "pwwkew"   | 3 | substr:"wke", len is 3  |
 
+该问题主要包含两个子问题：1.从字符串中找到子字符串；2.针对子字符串，查看其中是否有重复的字符。下面的几种方法也是针对上面的两个子问题进行优化的。
 
-
-方法一：暴力法。
+方法一：暴力法。遍历所有子字符串，针对每个字符串，查看是否含有重复字符。时间超时。
 
 ```
 class Solution1 {
@@ -229,11 +229,24 @@ class Solution1 {
         }
 };
 ```
-复杂度分析：
-时间复杂度：O(n^3)。
-方法二：
+复杂度分析：  
+时间复杂度：O(n^3)。  
+
+统计子字符串时，两个循环所用时间为O(n\^2)，针对每个子字符串，查看是否有重复字符，所用时间为O(j - i)，所以总时间复杂度为O(n^3)。 
+
+
+空间复杂度：O(min(n, m)，其中n是字符串的长度，m是字符集的大小。
+
+方法二：双指针法。该方法是对上面暴力法的优化。主要有两点优化。
+
+1. 替代上面的 allUnique 函数，使用了unordered_set 容器，来对子字符串进行了处理，使得时间复杂度降低到了O(n^2)。
+2. 针对固定 left 的情况，只要找到 [left, right) 存在与 right 指针重复的字符，就跳出子循环，因为此时[left, right + i]一定含有重复字符。继续查看 left + 1 为起始的子字符串情况。
+
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_1.png)
 
 ```
+//using two point && unordered_set 
+//used time:628ms
 class Solution2 {
     public:
         int lengthOfLongestSubstring(string s) {
@@ -258,10 +271,18 @@ class Solution2 {
         }
 };
 ```
+复杂度分析：
 
-方法三：
+时间复杂度：O(n^2)。  
+空间复杂度：O(min(n, m)，其中n是字符串的长度，m是字符集的大小。  
+
+方法三：滑动窗口法。上面提到的两种方法本质上都是遍历所包含的子字符串。本方法继续对字符串的选择进行筛选。如下图所示，当 right 指针指向的字符，与 [left,right) 之间的 i 字符相同时，此时，只需要找到重复字符的位置 i，从该字符处往后查找即可；因为[left, i)的任一字符作为起始字符，与后面组合成无重复字符的字符串长度一定小于[left, right)。
+
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_2.png)
 
 ```
+//using two pointer && sliding window && unordered_set
+//used time:28ms
 class Solution3{
     public:
         int lengthOfLongestSubstring(string s) {
@@ -290,9 +311,18 @@ class Solution3{
 };
 ```
 
-方法四：
+复杂度分析：  
+时间复杂度:O(2n), 即 O(n)。   
+空间复杂度：O(min(n, m)，其中 n 是字符串的长度，m 是字符集的大小。 
+
+方法四：滑动窗口法。该方法是对方法三进一步优化。
+
+1. 首先，上面最left的移动是逐个移动，最后移动到 i + 1 位置的，本方法使用 unordered_map ，一次移动到 i + 1 的位置。
+2. 其次，对退出条件作了进一步的优化，使用 right < s.size 的同时，添加了 left + res < s.size() 的限制，从而避免了一些无效子字符串的检查。
 
 ```
+//using sliding window && two_pointer && unordered_map
+//used time:8ms
 class Solution4 {
     public:
         int lengthOfLongestSubstring(string s) {
@@ -312,34 +342,20 @@ class Solution4 {
 }
 ```
 
-方法五:
+复杂度分析：  
 
-```
-class Solution5 {
-    public:
-        int lengthOfLongestSubstring(string s) {
-            int res = 0, left = 0, right = 0;
-            int charset[256] = {-1};
+时间复杂度：O(n)。  
+空间复杂度： O(min(m, n))。
 
-            while (right < s.size() && left + res < s.size()) {
-                left = max(left, charset[s[right]]);
-                res  = max(res, right - left + 1);
-                charset[s[right]] = right + 1;
-                right++;
-            }
 
-            return res;
-        }
-};
-```
 小结：
 
 1. 滑动窗口的边界条件可以设置为(right < end_of_string && left + window_size < end_of_string)。
 2. 注意 unordered_set 和 unordered_map 的使用方法。
 3. 注意 mapping.insert({key, val}) 和 mpaping[key] = val 的区别。
-4. 针对字符串相关问题，注意使用三个字符表格，char[26] 用于 'a'-'z' 或 'A'-'Z'；char[128] 用于 ASCII 码；char[256] 用于扩展的 ASCII 码。
+
 
 总结
 ===
 
-对于可以使用双指针的问题，多多考虑使用的指针类型，是从一边开始的快慢指针，还是从两边开始的首尾指针。针对快慢指针，用于 sliding window 问题时，还可以考虑通过指针控制窗口的大小来优化算法。后续会再提到。
+对于可以使用双指针的问题，多多考虑使用的指针类型，是从一边开始的快慢指针，还是从两边开始的首尾指针。针对快慢指针，用于 sliding window 问题时，还可以考虑通过指针控制窗口的大小来优化算法。
