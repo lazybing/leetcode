@@ -26,7 +26,8 @@ LeetCode 中有许多与字符串、数组、链表相关的题目，都用到�
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/hash_table.png)
 
 如上图所示，首先创建一个空的哈希表，依次往哈希表中插入链表的节点 3-->2-->0-->4,如果链表有环，接下来再继续查看哈希表中是否有下一个节点 `2`,如果有此节点，则证明有环；否则，无环。
-```
+
+```cpp
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -37,7 +38,7 @@ LeetCode 中有许多与字符串、数组、链表相关的题目，都用到�
  */
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
+    bool hasCycle (ListNode *head) {
         unordered_set<ListNode *> seenNode;
         while (head) {
             if (seenNode.find(head) != seenNode.end())
@@ -63,7 +64,7 @@ public:
 
 如上图所示，将快慢指针同时初始化为第一个节点，如图1所示。快指针每次移动步长为2，慢指针每次移动步长为1.慢指针到达节点2时，进入环内，此时快指针指向节点0.如图2所示。继续一定，快指针第二次指向2节点，慢指针指向0节点，如图3所示。最后，快指针慢指针在节点4处再次相遇，证明有环，如图4所示。如果无环，快指针会提前到达链表终点。
 
-```
+```cpp
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -74,14 +75,14 @@ public:
  */
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
+    bool hasCycle (ListNode *head) {
         if(head == NULL || head->next == NULL)
             return false;
         
         ListNode *p_slow = head;
         ListNode *p_fast = head;
         
-        while(p_slow != NULL && p_fast->next != NULL){
+        while (p_slow != NULL && p_fast->next != NULL) {
             p_slow = p_slow->next;
             p_fast = p_fast->next->next;
             
@@ -120,10 +121,10 @@ The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this c
 
 方法一：暴力法。遍历所有可能储水情况，找到其中的最大值即可。但该方法会计算超时。
 
-```
+```cpp
 class Solution {
 public:
-    int maxArea(vector<int>& height) {
+    int maxArea (vector<int>& height) {
         int res = 0;
         int area = 0;
         for (int i = 0; i < height.size() - 1; i++)
@@ -158,15 +159,15 @@ public:
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode11_2.png)
 
-```
+```cpp
 class Solution {
 public:
-    int maxArea(vector<int>& height) {
+    int maxArea (vector<int>& height) {
         int res = 0;
         int area = 0;
         int left = 0, right = height.size() - 1;
         
-        while(left < right) {
+        while (left < right) {
             area = (right - left) * min(height[right], height[left]);
             res  = max(res, area);
             if (height[left] < height[right])
@@ -202,10 +203,10 @@ Test Case:
 
 方法一：暴力法。遍历所有子字符串，针对每个字符串，查看是否含有重复字符。时间超时。
 
-```
+```cpp
 class Solution1 {
     private:
-        bool allUnique(string s){
+        bool allUnique (string s) {
             unordered_map<char, int> mapping;
             for (int i = 0; i < s.size(); i++) {
                 if (mapping.find(s[i]) == mapping.end())
@@ -216,7 +217,7 @@ class Solution1 {
             return true;
         }
     public:
-        int lengthOfLongestSubstring(string s) {
+        int lengthOfLongestSubstring (string s) {
             int res = 0;
             for (int i = 0; i < s.size(); i++)
                 for (int j = i; j < s.size(); j++)
@@ -244,12 +245,12 @@ class Solution1 {
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_1.png)
 
-```
+```cpp
 //using two point && unordered_set 
 //used time:628ms
 class Solution2 {
     public:
-        int lengthOfLongestSubstring(string s) {
+        int lengthOfLongestSubstring (string s) {
             int res = 0, left = 0, right = 0;
             unordered_set<char> setting;
 
@@ -280,18 +281,18 @@ class Solution2 {
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode3_2.png)
 
-```
+```cpp
 //using two pointer && sliding window && unordered_set
 //used time:28ms
-class Solution3{
+class Solution3 {
     public:
-        int lengthOfLongestSubstring(string s) {
+        int lengthOfLongestSubstring (string s) {
             int res = 0, left = 0, right = 0;
             unordered_set<char> setting;
 
             while (right < s.size()) {
                 if (setting.find(s[right]) != setting.end()) {
-                    while(left < right) {
+                    while (left < right) {
                         if (s[left] == s[right]) {
                             setting.erase(s[left]);
                             left++;
@@ -320,12 +321,12 @@ class Solution3{
 1. 首先，上面最left的移动是逐个移动，最后移动到 i + 1 位置的，本方法使用 unordered_map ，一次移动到 i + 1 的位置。
 2. 其次，对退出条件作了进一步的优化，使用 right < s.size 的同时，添加了 left + res < s.size() 的限制，从而避免了一些无效子字符串的检查。
 
-```
+```cpp
 //using sliding window && two_pointer && unordered_map
 //used time:8ms
 class Solution4 {
     public:
-        int lengthOfLongestSubstring(string s) {
+        int lengthOfLongestSubstring (string s) {
             int res = 0, left = 0, right = 0;
             unordered_map<char, int> mapping;
             while (right < s.size() && left + res < s.size()) {
