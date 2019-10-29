@@ -145,9 +145,15 @@ public:
 
 `area = max(a[i + n], a[i - j]) * (i + n - (i - j))`  
 
-将上式中的`max(a[i + n], a[i - j])`看做 w, `(i + n) - (i - j)`看做h，上式可以简化为即 `area = w * h`。固定 h，w 越大面积越大，固定 w，h 越大面积越大。因此可以选取起始和结束两个位置作为最大 w，h选择其中较小者，计算面积，然后逐步h较小者的指针，最后求得最大面积。
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode11_1.png)
 
-选取数组的起始和末尾元素作为首尾双指针的起始位置，计算两个指针可容纳的储水面积，之后移动数值较小的指针向中间靠拢，重新计算两个指针可容纳的储水面积并与之前的最大面积做比较，以此类推，直至两个指针相遇位置，即可得最大面积。
+
+选取数组的开始和末尾元素作为首尾双指针的起始位置，计算两个指针可容纳的储水面积，之后移动数值较小的指针向中间靠拢，重新计算两个指针可容纳的储水面积并与之前的最大面积做比较，以此类推，直至两个指针相遇位置，即可得最大面积。  
+
+下面给出这种计算和合理性说明。选取第一个和最后一个元素时，量元素的最大储水能力为 `area = max(a[0], a[size]) * (size)`.假设a[0]是较小者，则a[0]与其他任一元素的储水能力不可能超过 area，因为`max(a[0], a[i]) <= a[0]`，而`i < size`，所以`max(a[0], a[i]) * size <  max(a[0], a[size]) * (size)`.
+
+
+![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode11_2.png)
 
 ```
 class Solution {
