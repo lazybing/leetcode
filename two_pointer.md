@@ -173,6 +173,150 @@ public:
 
 ### 双指针与滑动窗口
 
+> LeetCode3 Longest Substring Without Repeating Characters
+>
+> Given a string, find the length of the longest substring without repeating characters.
+> 
+Test Case:
+ 
+ | Input | Output | Explanation  |
+ | :---: | :----: | :---------:  |
+ |"abcabcbb"  | 3 | substr:"abc", len is 3  |
+ | "bbbbb"    | 1 | substr:"b", len is 1  |
+ | "pwwkew"   | 3 | substr:"wke", len is 3  |
+
+方法一：暴力法。
+
+```
+class Solution1 {
+    private:
+        bool allUnique(string s){
+            unordered_map<char, int> mapping;
+            for (int i = 0; i < s.size(); i++) {
+                if (mapping.find(s[i]) == mapping.end())
+                    mapping.insert({s[i], 1});
+                else
+                    return false;
+            }
+            return true;
+        }
+    public:
+        int lengthOfLongestSubstring(string s) {
+            int res = 0;
+            for (int i = 0; i < s.size(); i++)
+                for (int j = i; j < s.size(); j++)
+                    if (allUnique(s.substr(i, j - i + 1)))
+                        res = max(res, j - i + 1);
+                    else
+                        break;
+
+            return res;
+        }
+};
+```
+
+方法二：
+
+```
+class Solution2 {
+    public:
+        int lengthOfLongestSubstring(string s) {
+            int res = 0, left = 0, right = 0;
+            unordered_set<char> setting;
+
+            for (left = 0; left < s.size(); left++) {
+                right = left;
+                while (right < s.size()) {
+                    if (setting.find(s[right]) != setting.end()) { //has the char
+                        break;
+                    } else { // donnot has the char
+                        setting.insert(s[right]);
+                        res = max(res, right - left + 1);
+                        right++;
+                    }
+                }
+                setting.clear();
+            }
+
+            return res;
+        }
+};
+```
+
+方法三：
+
+```
+class Solution3{
+    public:
+        int lengthOfLongestSubstring(string s) {
+            int res = 0, left = 0, right = 0;
+            unordered_set<char> setting;
+
+            while (right < s.size()) {
+                if (setting.find(s[right]) != setting.end()) {
+                    while(left < right) {
+                        if (s[left] == s[right]) {
+                            setting.erase(s[left]);
+                            left++;
+                            break;
+                        } else {
+                            setting.erase(s[left]);
+                            left++;
+                        }
+                    }
+                }
+                setting.insert(s[right]);
+                res = max(res, right - left + 1);
+                right++;
+            }
+            return res;
+        }
+};
+```
+
+方法四：
+
+```
+class Solution4 {
+    public:
+        int lengthOfLongestSubstring(string s) {
+            int res = 0, left = 0, right = 0;
+            unordered_map<char, int> mapping;
+            while (right < s.size() && left + res < s.size()) {
+                if (mapping.find(s[right]) != mapping.end()) {
+                    left = max(left, mapping[s[right]] + 1);
+                }
+                mapping[s[right]] = right;
+                res = max(res, right - left + 1);
+                right++;
+            }
+
+            return res;
+        }
+}
+```
+
+方法五:
+
+```
+class Solution5 {
+    public:
+        int lengthOfLongestSubstring(string s) {
+            int res = 0, left = 0, right = 0;
+            int charset[256] = {-1};
+
+            while (right < s.size() && left + res < s.size()) {
+                left = max(left, charset[s[right]]);
+                res  = max(res, right - left + 1);
+                charset[s[right]] = right + 1;
+                right++;
+            }
+
+            return res;
+        }
+};
+```
+
 总结
 ===
 
