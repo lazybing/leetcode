@@ -106,7 +106,7 @@ public:
 ### 双指针与数组
 
 
-> LeetCode11 Container With Most Water  
+> LeetCode11 Container With Most Water
 >
 > Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 > 
@@ -141,17 +141,20 @@ public:
 * 时间复杂度：O(n^2)。对每一对儿进行计算，总计算结果一共 n(n - 1) / 2.
 * 空间复杂度：O(1)。只需要额外的一个变量存放最大面积即可。
 
-方法二：双指针法。如下图所示，任意两个数组元素(a[i + n] 和 a[i - j ])的最大储水能力为  
+方法二：双指针法。如下图所示，任意两个数组元素(a[i + n] 和 a[i - j ])的最大储水能力为
 
-`area = max(a[i + n], a[i - j]) * (i + n - (i - j))`  
+`area = max(a[i + n], a[i - j]) * (i + n - (i - j))`
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode11_1.png)
 
 
-选取数组的开始和末尾元素作为首尾双指针的起始位置，计算两个指针可容纳的储水面积，之后移动数值较小的指针向中间靠拢，重新计算两个指针可容纳的储水面积并与之前的最大面积做比较，以此类推，直至两个指针相遇位置，即可得最大面积。  
+选取数组的开始和末尾元素作为首尾双指针的起始位置，计算两个指针可容纳的储水面积，之后移动数值较小的指针向中间靠拢，重新计算两个指针可容纳的储水面积并与之前的最大面积做比较，以此类推，直至两个指针相遇位置，即可得最大面积。
 
-下面给出这种计算和合理性说明。选取第一个和最后一个元素时，量元素的最大储水能力为 `area = max(a[0], a[size]) * (size)`.假设a[0]是较小者，则a[0]与其他任一元素的储水能力不可能超过 area，因为`max(a[0], a[i]) <= a[0]`，而`i < size`，所以`max(a[0], a[i]) * size <  max(a[0], a[size]) * (size)`.
+下面给出这种计算步骤和合理性说明。
 
+1. 选取第一个和最后一个元素时，假设a[0]是较小者，两元素的最大储水能力为 `area = max(a[0], a[size]) * (size) = a[0] * size`.则a[0]与其他任一元素的储水能力不可能超过 area，因为`max(a[0], a[i]) <= a[0]`，而`i < size`，所以`max(a[0], a[i]) * i <  max(a[0], a[size]) * (size)`.
+2. 移动左指针指向元素a[1],计算面积的大小，并与1中计算的面积作比较，取较大者。按照同样的原则，移动a[1]和a[size]中较小者，向中间靠拢。
+3. 重复步骤2.直至两指针指向同一元素，返回最大值。
 
 ![](https://raw.githubusercontent.com/lazybing/leetcode/master/img/leetcode11_2.png)
 
@@ -176,7 +179,7 @@ public:
     }
 };
 ```
-复杂度分析：  
+复杂度分析：
 
 * 时间复杂度：O(n)。遍历一次 vector 中的所有元素。
 * 空间复杂度：O(1)。使用恒定空间。
