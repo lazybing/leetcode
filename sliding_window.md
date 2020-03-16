@@ -1,6 +1,6 @@
 # 第十一章 滑动窗口
 
-滑动窗口在 Leetcode 中占了很大的比例。
+滑动窗口在 Leetcode 中占了很大的比例。常用于解决数组、字符串的子元素问题，它可以将嵌套的循环问题，转换为单循环问题，降低时间复杂度。
 
 ## 11.1 滑动窗口最大值
 
@@ -25,7 +25,7 @@
 
 ### 解法一：暴力法
 
-遍历所有的滑动窗口，找到每个窗口的最大值。一共有`N - k + 1`个滑动窗口，每个有`k`个元素，表现较差。
+遍历数组包含的所有可能的窗口。计算每个窗口中所有元素的最大值。一共有 `N - k + 1` 个滑动窗口，每个窗口有 `k` 个元素，该算法表现较差。
 
 ```python
 class Solution:
@@ -35,11 +35,14 @@ class Solution:
             return []
             
         output = []
+        # 遍历所有可能的窗口
         for i in range(length - k + 1):
             max_val = -sys.maxsize - 1
+            # 找到一个窗口中的最大值
             for j in range(i, i + k):
                 max_val = max(max_val, nums[j])
                 
+            # 将最大值放到数组列表里
             output.append(max_val)
             
         return output
@@ -53,6 +56,18 @@ class Solution:
 
 ### 解法二:滑动窗口法
 
+暴力法每次都比较滑动窗口中所有元素的大小，当`k`较大时，会有很多重复操作。如果能有种方法在滑动窗口每移动一个元素，将窗口外的元素删除、将窗口内所有比新加入元素小的元素删除，以后每次加入新的元素就能省掉很多重复操作。
+
+为此，我们引入双向队列。双向队列允许头尾两端都能在O(1)的时间内进行数据的查看、添加和删除。用双向队列存放元素索引，而不是元素本身。
+
+算法如下：
+
+1. 每次添加新的元素，移除滑动窗口外的元素索引。  
+2. 移除比当前新元素小的所有元素。
+3. 将当前元素添加到双向队列中。
+4. 将双向队列中的[0]元素添加到输出中。
+5. 遍历完所有元素后，返回输出数组。
+
 ```python
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
@@ -60,6 +75,7 @@ class Solution:
         out = []
         
         for i, n in enumerate(nums):
+            # 移除所有比当前元素小的元素
             while d and nums[d[-1]] < n:
                 d.pop()
             d += i,
@@ -71,11 +87,9 @@ class Solution:
         return out
 ```
 
-### 解法三
-
-```
-
-```
+#### 复杂度分析：
+* 时间复杂度：O(N)，每个元素被处理两次-其索引被添加到双向队列中和从双向队列删除。
+* 空间复杂度：O(N)，输出数组使用了O(N - k + 1)空间，双向队列使用了O(k)。
 
 ## 11.2 最小覆盖子串
 
@@ -92,7 +106,13 @@ class Solution:
 > * 如果S中不存在这样的子串，则返回空字符串""
 > * 如果S中存在这样的子串，我们保证它是唯一的答案。
 
-### 解法一：滑动窗口法
+### 解法一：暴力法
+
+针对字符串S中的所有子字符串，检测是否包含字符串T的所有字符。该方法简单直接，但效率低。此处略去。
+
+### 解法二：滑动窗口法
+
+移动 `right` 指针不断扩大窗口，当窗口包含全部所需的字符后，如果能收缩，我们就收缩窗口直到得到最小窗口。
 
 具体步骤：
 
@@ -102,24 +122,118 @@ class Solution:
 4. 若窗口不包含T的全部字符，则跳转至2。
 
 ```python
-def minWindow(self, s, t):
-    if not t or not s:
-        return ""
+class Solution:
+    def minWindow(self, s:str, t:str)->str:
+        if not t or not s:
+            return ""
+            
+        dict_t = Counter(t)
         
-    
+        required = len(dict_t)
+        
+        #初始化滑动窗口
+        left, right = 0, 0
+        
+        formed = 0
+        
+        window_counts = {}
+        
+        ans = float("inf"), None, None
+        
+        while right < len(s):
+            character = s[right]
+            window_counts[character] = window_counts.get(character, 0) + 1
+            
+            if character in dict_t and window_counts[character] == dict_t[character]:
+                formed += 1
+                
+            while left <= right and formed == required:
+                character = s[left]
+                
+                if right - left + 1 < ans[0]:
+                    ans = (right - left + 1, left, right)
+                    
+                window_counts[character] -= 1
+                if character in dict_t and window_counts[character] < dict_t[character]:
+                    formed -= 1
+                    
+                left += 1
+            right += 1
+                
+        if ans[0] == float("inf"):
+            return ""
+        else:
+            return s[ans[1]: ans[2] + 1]
+        
 ```
 
 #### 复杂度分析：
-* 时间复杂度: O(|S| + |T|), 其中|S| 和 |T| 代表字符串 S 和 T 的长度。在最坏的情况下，可能会对S中的每个元素遍历两遍，左指针和右指针各一遍。
-* 空间复杂度: O(|S| + |T|)。当窗口大小等于 |S| 时为S。当|T|包括全部唯一字符时为T。
+* 时间复杂度：O(|S| + |T|), 其中|S| 和 |T| 代表字符串 S 和 T 的长度。在最坏的情况下，可能会对S中的每个元素遍历两遍，左指针和右指针各一遍。
+* 空间复杂度：O(|S| + |T|)。当窗口大小等于 |S| 时为S。当|T|包括全部唯一字符时为T。
 
-### 解法二：优化滑动窗口
+### 解法三：优化滑动窗口
+
+从S中去除所有在T中不存在的元素后，得到filtered_S字符串，它包含S中的全部字符以及它们在S的下标。
+
+比如`S="ABCDDDDDDEEAFFBC"`和 `T="ABC"`，则
+
+`filtered_S = [(0, 'A'), (1, 'B'), (2, 'C'), (11, 'A'), (14, 'B'), (15, 'C')]`
+
+此处的(0, 'A')表示字符'A'在字符串S的下表为0.接下来可以在更短的filtered_S中使用滑动窗口法。
+
+当|filtered_S| <<< |S|时，优化效果显著。
+
 ```python
+class Solution:
+    def minWindow(self, s, t):
+        if not t or not s:
+            return ""
+            
+        dict_t = Counter(t)
+        
+        required = len(dict_t)
+        
+        for i, char in enumerate(s):
+            if char in dict_t:
+                filtered_s.append((i, char))
+                
+        left, right = 0, 0
+        formed = 0
+        window_counts = {}
+        
+        ans = float("inf"), None, None
+        
+        while right < len(filtered_s):
+            character = filtered_s[r][1]
+            window_counts[character] = window_counts.get(character, 0) + 1
+            
+            if window_counts[character] == dict_t[character]:
+                formed += 1
+                
+            while left <= right and formed == required:
+                character = filtered_s[l][1]
+                
+                end   = filtered_s[right][0]
+                start = filtered_s[left][0]
+                if end - start + 1 < ans[0]:
+                    ans = (end - start + 1, start, end)
+                    
+                window_counts[character] -= 1
+                if window_counts[character] < dict_t[character]:
+                    formed -= 1
+                left += 1
+                
+            right += 1
+            
+        if ans[0] == float("inf"):
+            return ""
+        else:
+            return s[ans[1]:ans[2] + 1]
 ```
 
 #### 复杂度分析：
 * 时间复杂度：O(|S| + |T|),其中 |S| 和 |T| 分别代表字符串 S 和 T的长度。
-* 空间复杂度: O(|S| + |T|)。
+* 空间复杂度：O(|S| + |T|)。
 
 ## 11.3 替换后的最长重复字符
 
@@ -143,6 +257,10 @@ def minWindow(self, s, t):
 > 解释: 将中间的一个'A'替换为'B',字符串变为 "AABBBBA"。
 子串 "BBBB" 有最长重复字母, 答案为 4。
 
+使用滑动窗口：
+
+
+
 ### 解法一：
 
 ```python
@@ -162,8 +280,11 @@ class Solution:
         return high -low
 ```
 
-### 解法二：
-```
+### 解法二：滑动窗口法
+
+当滑动窗口大小达到给定的最大值k后，窗口一直前进；当窗口内记载的出现次数最大字符大于上一次的出现最大次数字符时，窗口长度增加；否则，窗口保持原来长度前进一个单位。
+
+```python
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         maxf = res = 0
@@ -179,6 +300,10 @@ class Solution:
                 
         return res
 ```
+
+#### 复杂度分析：  
+* 时间复杂度：O(N)。
+* 空间复杂度：O(1)。
 
 ## 11.4 字符串的排列
 
@@ -202,7 +327,147 @@ class Solution:
 
 #### 解法一：暴力法
 
+最简单的方法生成所有字符串的组合，然后检测这些生成的字符串是否是长字符串的子串。
+
+```python
+class Solution:
+    def perm(self, s=''):
+        if len(s) <= 1:
+            return [s]
+        
+        s1 = []
+        for i in range(len(s)):
+            for j in self.perm(s[0:i] + s[i + 1:]):
+                s1.append(s[i] + j)
+                
+        return s1
+    
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if (len(s1) > len(s2)):
+            return False
+        
+        s1_perm = list(set(self.perm(s1)))
+        for i in s1_perm:
+            idx = s2.find(i)
+            if idx != -1:
+                return True
+            
+        return False
+```
+
+#### 复杂度分析：
+
+* 时间复杂度:O(n!)。
+* 空间复杂度:O(n^2)。
+
 #### 解法二：滑动窗口
+
+使用和 S1 等长的滑动窗口判断 S2 在这个窗口内的字符出现个数和 S1 的字符出现个数是否相等。
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if (len(s1) > len(s2)):
+            return False
+        
+        c = collections.Counter(s1)
+        
+        len1  = len(s1)
+        left, right = 0, len1 - 1
+        
+        s = collections.Counter(s2[left:right])
+        
+        while right < len(s2):
+            s[s2[right]] += 1
+            if s == c:
+                return True
+            
+            s[s2[left]] -= 1
+            if (s[s2[left]] == 0):
+                del s[s2[left]]
+                
+            left  += 1
+            right += 1
+            
+        return False
+```
+
+#### 解法三：滑动窗口
+
+```python
+class Solution:
+    def match(self, s1, s2):
+        for i in range(26):
+            if s1[i] != s2[i]:
+                return False
+        return True
+            
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if (len(s1) > len(s2)):
+            return False
+        
+        list1 = [0 for i in range(26)]
+        list2 = [0 for i in range(26)]
+        
+        for i in range(len(s1)):
+            list1[ord(s1[i]) - ord('a')] += 1
+            list2[ord(s2[i]) - ord('a')] += 1
+            
+        for i in range(len(s2) - len(s1)):
+            if self.match(list1, list2):
+                return True
+            list2[ord(s2[i + len(s1)]) - ord('a')] += 1
+            list2[ord(s2[i]) - ord('a')] -= 1
+
+        return self.match(list1, list2)
+```
+
+#### 解法四：优化滑动窗口
+
+```python
+class Solution:
+       
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if (len(s1) > len(s2)):
+            return False
+        
+        list1 = [0 for i in range(26)]
+        list2 = [0 for i in range(26)]
+        
+        for i in range(len(s1)):
+            list1[ord(s1[i]) - ord('a')] += 1
+            list2[ord(s2[i]) - ord('a')] += 1
+            
+        count = 0
+        for i in range(26):
+            if list1[i] == list2[i]:
+                count += 1
+                
+        for i in range(len(s2) - len(s1)):
+            r = ord(s2[i + len(s1)]) - ord('a')
+            l = ord(s2[i]) - ord('a')
+            if count == 26:
+                return True
+            
+            list2[r] += 1
+            if list2[r] == list1[r]:
+                count += 1
+            elif list2[r] == list1[r] + 1:
+                count -= 1
+                
+            list2[l] -= 1
+            if list2[l] == list1[l]:
+                count += 1
+            elif list2[l] == list1[l] - 1:
+                count -= 1
+                
+        return count == 26
+```
+
+#### 复杂度分析
+
+* 时间复杂度:O(len1 + (len2 - len1),其中len1是s1的长度,len2是s2的长度。
+* 空间复杂度:O(1)。
 
 
 
