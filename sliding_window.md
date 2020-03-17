@@ -257,9 +257,12 @@ class Solution:
 > 解释: 将中间的一个'A'替换为'B',字符串变为 "AABBBBA"。
 子串 "BBBB" 有最长重复字母, 答案为 4。
 
-使用滑动窗口：
+使用滑动窗口，因为字符串都是由大写字母组成，计算窗口内所有字母出现的次数。具体算法如下：
 
-
+1. 计算出窗口内出现次数最多的字母`max_char_n`
+2. `max_char_n + k`是否大于窗口大小`high-low`。
+3. 若2成立，扩大窗口，右移right标记。重复步骤1、2。
+4. 若2不成立，缩小窗口，右边界字母计数减1，右移left标记。重复步骤1、2。
 
 ### 解法一：
 
@@ -279,6 +282,11 @@ class Solution:
         
         return high -low
 ```
+
+#### 复杂度分析：
+
+* 时间复杂度：O(N)，遍历整个数组。
+* 空间复杂度：O(1)，只需要数组中大写字母的计数器个数。
 
 ### 解法二：滑动窗口法
 
@@ -325,13 +333,14 @@ class Solution:
 > 1. 输入的字符串只包含小写字母。
 > 2. 两个字符串的长度都在[1, 10000]之间。
 
-#### 解法一：暴力法
+#### 解法一：暴力法（超时）
 
-最简单的方法生成所有字符串的组合，然后检测这些生成的字符串是否是长字符串的子串。
+将短字符串s1生成所有可能的组合，然后检测这些生成的字符串是否是长字符串的子串。
 
 ```python
 class Solution:
-    def perm(self, s=''):
+    #生成可能的子字符串
+    def perm(self, s:str)->str:
         if len(s) <= 1:
             return [s]
         
@@ -341,12 +350,13 @@ class Solution:
                 s1.append(s[i] + j)
                 
         return s1
-    
+
     def checkInclusion(self, s1: str, s2: str) -> bool:
         if (len(s1) > len(s2)):
             return False
         
         s1_perm = list(set(self.perm(s1)))
+        #检测字符串S1的排列是否是字符串S2的子串
         for i in s1_perm:
             idx = s2.find(i)
             if idx != -1:
@@ -361,8 +371,6 @@ class Solution:
 * 空间复杂度:O(n^2)。
 
 #### 解法二：滑动窗口
-
-使用和 S1 等长的滑动窗口判断 S2 在这个窗口内的字符出现个数和 S1 的字符出现个数是否相等。
 
 ```python
 class Solution:
@@ -394,14 +402,11 @@ class Solution:
 
 #### 解法三：滑动窗口
 
+使用和 S1 等长的滑动窗口判断 S2 在这个窗口内的字符出现个数和 S1 的字符出现个数是否相等。
+
+
 ```python
 class Solution:
-    def match(self, s1, s2):
-        for i in range(26):
-            if s1[i] != s2[i]:
-                return False
-        return True
-            
     def checkInclusion(self, s1: str, s2: str) -> bool:
         if (len(s1) > len(s2)):
             return False
@@ -413,13 +418,30 @@ class Solution:
             list1[ord(s1[i]) - ord('a')] += 1
             list2[ord(s2[i]) - ord('a')] += 1
             
+        count = 0
+        for i in range(26):
+            if list1[i] == list2[i]:
+                count += 1
+                
         for i in range(len(s2) - len(s1)):
-            if self.match(list1, list2):
+            right = ord(s2[i + len(s1)]) - ord('a')
+            left = ord(s2[i]) - ord('a')
+            if count == 26:
                 return True
-            list2[ord(s2[i + len(s1)]) - ord('a')] += 1
-            list2[ord(s2[i]) - ord('a')] -= 1
-
-        return self.match(list1, list2)
+            
+            list2[right] += 1
+            if list2[right] == list1[right]:
+                count += 1
+            elif list2[right] == list1[right] + 1:
+                count -= 1
+                
+            list2[left] -= 1
+            if list2[left] == list1[left]:
+                count += 1
+            elif list2[left] == list1[left] - 1:
+                count -= 1
+                
+        return count == 26
 ```
 
 #### 解法四：优化滑动窗口
