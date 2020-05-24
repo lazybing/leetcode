@@ -47,6 +47,12 @@ class Solution{
 
             return maxArr[n];
         }
+
+        //Math Method
+        int integerBreak3(int n) {
+            int p = n % 3, q = n / 3, r = p + (2 * p + 1) % 5;
+            return n <= 3 ? n - 1 : (int)(pow(3, q - (p & 1)) * r);
+        }
 };
 
 
