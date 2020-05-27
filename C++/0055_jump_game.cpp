@@ -23,6 +23,31 @@
 class Solution{
     public:
         bool canJump(vector<int>& nums) {
-        
+           int max_len = 0;
+
+           if (nums.size() == 1)  return true;
+
+           for (int i = 0; i < nums.size(); i++) {
+                if (i == max_len && nums[i] == 0)
+                    return false;
+                if (nums[i] + i >= nums.size() - 1)
+                    return true;
+                max_len = max(max_len, nums[i] + i);
+           }
+
+           return true;
+        }
+
+        bool canJump2(vector<int>& nums) {
+            int n = nums.size();
+            int maxReach = 0;
+
+            for (int i = 0; i < n; i++) {
+                if (maxReach < i)
+                    return false;
+                maxReach = max(maxReach, nums[i] + i);
+            }
+
+            return true;
         }
 };
