@@ -46,5 +46,27 @@ class Solution {
 
             return res;
         }
+
+        int findContentChildren2(vector<int>& g, vector<int>& s) {
+            int res = 0;
+
+            sort(g.begin(), g.end());
+            sort(s.begin(), s.end());
+
+            int i = g.size() - 1, j = s.size() - 1;
+            while (j >= 0) {
+                while (i >= 0 && s[j] < g[i]) {
+                    i--;
+                }
+
+                if (i >= 0) {
+                    res++;
+                    i--;
+                }
+                j--;
+            }
+
+            return res;
+        } 
 };
 
