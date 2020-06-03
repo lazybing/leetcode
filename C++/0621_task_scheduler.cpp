@@ -18,3 +18,28 @@
  *  The number of tasks is in the range [1, 10000].
  *  The integer n is in the range [0, 100]
  */
+class Solution {
+    public:
+        int leastInterval(vector<char>&tasks, int n) {
+            int counts[26] = {0};
+            int max = 0;
+            int numMax = 0;
+
+            for (int i = 0; i < tasks.size(); i++) {
+                counts[tasks[i] - 'A']++;
+                if (counts[tasks[i] - 'A'] > max) {
+                    max = counts[tasks[i] - 'A'];
+                    numMax = 1;
+                } else if (counts[tasks[i] - 'A'] == max) {
+                    numMax++;
+                }
+            }
+
+            //check to see if there's enought task to fill up the idles
+            if (tasks.size() - max > n * (max - 1)) {
+                return tasks.size();
+            }
+
+            return max + n * (max - 1) + numMax - 1;
+        }
+};
