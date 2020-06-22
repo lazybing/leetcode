@@ -18,6 +18,24 @@ class Solution {
             if (head == nullptr || head->next == nullptr) 
                 return head;
             
-            //TODO
+            ListNode dummy(0);
+            dummy.next = head;
+            ListNode *p  = &dummy;
+            ListNode *p1 = head;
+            ListNode *p2 = head;
+
+            while (p1) {
+                while (p2->next && p1->val == p2->next->val)
+                    p2 = p2->next;
+
+                if (p1 == p2)
+                    p = p1;
+                else
+                    p->next = p2->next;
+
+                p1 = p2 = p->next;
+            }
+
+            return dummy.next;
         }
 }
