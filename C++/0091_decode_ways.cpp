@@ -30,7 +30,7 @@ class Solution {
                 int two = stoi(s.substr(i - 2, 2));
 
                 if (one >= 1)  dp[i] = dp[i] + dp[i - 1];
-                if (two >= 10) dp[i] = dp[i] + dp[i - 2];
+                if (two >= 10 && two <= 26) dp[i] = dp[i] + dp[i - 2];
             }
 
             return dp[s.length()];
