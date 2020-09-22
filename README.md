@@ -44,4 +44,36 @@ LeetCode Solutions
 | [191. Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/) | Bit Manipulation | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0191_number_of_one_bits.cpp) | Easy |
 | [198. House Robber](https://leetcode.com/problems/house-robber/) | Dynamic Programming | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0198_house_robber.cpp) | Easy |
 | [199. Binary Tree Right Side Views](https://leetcode.com/problems/binary-tree-right-side-view/) | Tree & Depth First Search & Breath First Search | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0199_binary_tree_right_side_view.cpp) | Medium |
+| [207. Course Schedule](https://leetcode.com/problems/course-schedule/) | Depth First Search & Breath First Search & Graph & Topological Sort| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0207_course_schedule.cpp) | Medium |
+| [213. House Robber II](https://leetcode.com/problems/house-robber-ii/) | Dynamic Programming| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0213_house_robber_ii.cpp) | Medium |
+| [221. Maximal Square](https://leetcode.com/problems/maximal-square/) | Dynamic Programming| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0221_maximal_square.cpp) | Medium |
+| [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/) | Binary Search & Tree| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0222_count_complete_tree_nodes.cpp) | Medium |
+| [240. Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) | Binary Search & Divide and Conquer| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0240_search_a_2d_matrix.cpp) | Medium |
+| [241. Different Ways to Add Parentheses](https://leetcode.com/problems/different-ways-to-add-parentheses/) | Divide and Conquer| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0241_different_ways_to_add_parentheses.cpp) | Medium |
+| [264. Ugly Number II](https://leetcode.com/problems/ugly-number-ii/) | Dynamic Programming| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0264_ugly_number_ii.cpp) | Medium |
+| [279. Perfect Squares](https://leetcode.com/problems/perfect-squares/) | Dynamic Programming & Breadth Frist Search| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0279_perfect_squares.cpp) | Medium |
+| [289. Game of Life](https://leetcode.com/problems/game-of-life/) | Array | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0289_game_of_life.cpp) | Medium |
+| [303. Range Sum Query - Immutable](https://leetcode.com/problems/range-sum-query-immutable/) | Array | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0303_range_sum_query.cpp) | Easy |
+| [312. Burst Balloons](https://leetcode.com/problems/burst-balloons/) | Divide and Conquer & Dynamic Programming | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0312_burst_balloons.cpp) | Hard |
+| [315. Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/) | Binary Search & Divide and Conquer & Sort & Binary Indexed Tree & Segment Tree | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0315_count_of_smaller_numbers_after_self.cpp) | Medium |
+| [316. Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/) | Stack & Greedy | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0316_remove_duplicate_letters.cpp) | Hard |
+| [327. Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/) | Binary Search & Divide and Conquer & Sort & Binary Indexed Tree & Segment Tree | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0327_count_of_range_sum.cpp) | Hard |
+| [343. Integer Break](https://leetcode.com/problems/integer-break/) | Dynamic Programming | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0343_integer_brak.cpp) | Medium |
+| [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | Hash Table & Heap | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0347_top_k_frequent_elements.cpp) | Medium |
+| [371. Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/) | Bit Manipulation | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0371_sum_of_two_integers.cpp) | Medium |
+| [409. Longest Palindrome](https://leetcode.com/problems/longest-palindrome/) | Hash Table | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0409_longest_palindrome.cpp) | Easy |
+| [455. Assign Cookies](https://leetcode.com/problems/assign-cookies/) | Greedy | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0455_assign_cookies.cpp) | Easy |
+| [559. Maximum Depth of N-ary Tree](https://leetcode.com/problems/maximum-depth-of-n-ary-tree/) | Depth-First Search & Breadth-First Search & Tree | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0559_maximum_depth_of_n_ary_tree.cpp) | Easy |
+| [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/) | Array & Greedy & Queue| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0621_task_scheduler.cpp) | Medium |
+| [690. Employee Importance](https://leetcode.com/problems/employee-importance/) | Hash Table & Depth-First Search & Breadth-First Search | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0690_employee_importance.cpp) | Easy |
+| [787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | Dynamic Programming & Heap & Breadth-First Search| [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0787_cheapest_flights_within_k_stops.cpp) | Medium |
+| [860. Lemonade Change](https://leetcode.com/problems/lemonade-change/) | Greedy | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0860_lemonade_change.cpp) | Easy |
+| [932. Beautiful Array](https://leetcode.com/problems/beautiful-array/) | Divide and Conquer | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0932_beautiful_array.cpp) | Medium |
+
+
+
+
+
+
+
 
