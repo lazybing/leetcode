@@ -11,6 +11,7 @@ LeetCode Solutions
 | [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Array & Two Pointers & Stack | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0042_trapping_rain_water.cpp)| Hard |
 | [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/) | Array & Greedy | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0045_jump_gamp.cpp)| Hard |
 | [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/) | Hash Table & String | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0049_group_anagrams.cpp)| Medium |
+| [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) | Array & Dynamic Programming | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0053_maximum_subarray.cpp)| Easy |
 | [55. Jump Game](https://leetcode.com/problems/jump-game/) | Array & Greddy | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0055_jump_game.cpp)| Medium |
 | [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | Dynamic Programming | [Done](https://github.com/lazybing/leetcode/blob/master/C%2B%2B/0070_climbing_stairs.cpp)| Easy |
 | [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | Hash Table && Two Pointers & String & Sliding Window | TODO | Hard|
