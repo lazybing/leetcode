@@ -24,8 +24,8 @@ class Solution {
                         (0 < row[i][c]++ || 0 < col[j][c]++ || 0 < blk[i/3*3 + j/3][c]++))
                         return false;
                 }
+            return true;
         }
-        return true;
 };
 
 
